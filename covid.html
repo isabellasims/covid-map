@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- end point w JSON data: https://corona.lmao.ninja/v3/covid-19/countries-->
+<!--end point w JSON data by STATE: https://corona.lmao.ninja/v3/covid-19/states-->
+<!--https://www.colbyfayock.com/2020/03/how-to-create-a-coronavirus-covid-19-dashboard-map-app-with-gatsby-and-leaflet-->
+<html>
+<head>
+
+    <title>covid map</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--  import leaflet  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin="">
+    </script>
+    <!-- import p5 library   -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js" integrity="sha512-WIklPM6qPCIp6d3fSSr90j+1unQHUOoWDS4sdTiR8gxUTnyZ8S2Mr8e10sKKJ/bhJgpAa/qG068RDkg6fIlNFA==" crossorigin="anonymous"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #map {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div id='map'></div>
+
+<script type="text/javascript" src="us-states.js"></script>
+
+<script type="text/javascript">
+
+    // GET THE COVID DATA
+    function setup(){
+        loadJSON("https://corona.lmao.ninja/v3/covid-19/states",gotData);
+    }
+    let covid;
+    function gotData(data){
+        covid = data;
+    };
+
+
+
+
+
+    var map = L.map('map').setView([37.8, -96], 4);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox/light-v9',
+        tileSize: 512,
+        zoomOffset: -1
+    }).addTo(map);
+
+    var geojson = L.geoJson(statesData).addTo(map);
+
+
+    //    CREATE A FUNCTION THAT ADDS COLOR BASED ON DENSITY
+    function getColor(d) {
+        return d > 1000 ? '#800026' :
+            d > 500  ? '#BD0026' :
+                d > 200  ? '#E31A1C' :
+                    d > 100  ? '#FC4E2A' :
+                        d > 50   ? '#FD8D3C' :
+                            d > 20   ? '#FEB24C' :
+                                d > 10   ? '#FED976' :
+                                    '#FFEDA0';
+    }
+
+
+</script>
+
+
+
+</body>
+</html>
