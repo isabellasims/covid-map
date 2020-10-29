@@ -44,7 +44,6 @@
 <script type="text/javascript">
 
     var map = L.map('map').setView([37.8, -96], 4);
-
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -57,32 +56,40 @@
 //"https://corona.lmao.ninja/v3/covid-19/states"
     var geojson = L.geoJson(statesData).addTo(map);
 
+
+
+
+
+
+    let covid;
+    let bounds = statesData;
+    let cases_per_mil;
+
+
     // GET THE COVID DATA
     function setup(){
         loadJSON("https://disease.sh/v3/covid-19/states",gotData);
     }
 
+
     function gotData(data){
         covid = data;
+        // add covid cases to states data
+        statesData.features[1].properties.casesPerOneMillion = covid[1].casesPerOneMillion;
 
-        // for (let i = 0; i < statesData.length; i++){
-        //     if(statesData.features[i].properties.name === covid[i].state){
-        //         //L.geoJson(statesData).addTo(map)
-        //         L.geoJson(covid[i], {style: style}).addTo(map);
-        //         cases_per_mil.push(covid[i])
-
-
-
-
-        //    }
-
-    //    }
-
-
+        for (let i = 0; i < statesData.length; i++) {
+            if (statesData.features[i].properties.name === covid[i].state) {
+                //L.geoJson(statesData).addTo(map)
+                L.geoJson(covid[i], {style: style}).addTo(map);
+                cases_per_mil.push(covid[i]);
+            }
+        }
     };
-    let covid;
-    let bounds = statesData;
-    let cases_per_mil;
+
+
+
+
+
     //var geojson = L.geoJson(statesData).addTo(map);
 
     function getColor(d) {
@@ -94,13 +101,13 @@
                             d > 20   ? '#FEB24C' :
                                 d > 10   ? '#FED976' :
                                     '#FFEDA0';
-    }
+    };
 
     // CREATE FUNCTION TO STYLE AND APPLY GET COLOR
     function style(feature) {
         return {
             // apply get color
-            fillColor: getColor(casesPerOneMillion),
+            fillColor: getColor(feature.casesPerOneMillion),
             weight: 2,
             opacity: 1,
             color: 'white',
