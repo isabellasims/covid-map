@@ -76,11 +76,11 @@
         covid = data;
         console.log(data);
         console.log(statesData);
-        for (let i = 0; i < statesData.features.length; i++) {
-            console.log(statesData.features[i].properties.name);
-
-
-        }
+        // for (let i = 0; i < statesData.features.length; i++) {
+        //     console.log(statesData.features[i].properties.name);
+        //
+        //
+        // }
         // for (let i = 0; i < covid.length; i++) {
         //     console.log(covid[i]);
         //
@@ -91,10 +91,10 @@
         // add covid cases to states data
         statesData.features[1].properties.casesPerOneMillion = covid[1].casesPerOneMillion;
 
-        for (let i = 0; i < statesData.length; i++) {
+        for (let i = 0; i < statesData.features.length; i++) {
             console.log(i.type);
-            for (let j = 0; j < statesData.length; j++) {
-                console.log("i: ", statesData.features[i].properties.name , " j: ",covid[j].state);
+            for (let j = 0; j < statesData.features.length; j++) {
+              //  console.log("i: ", statesData.features[i].properties.name , " j: ",covid[j].state);
                 if (statesData.features[i].properties.name === covid[j].state) {
                     statesData.features[i].properties.casesPerOneMillion = covid[j].casesPerOneMillion;
 
