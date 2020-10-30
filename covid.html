@@ -64,7 +64,7 @@
     let covid;
     let bounds = statesData;
     let cases_per_mil;
-
+    let points = [];
 
     // GET THE COVID DATA
     function setup(){
@@ -74,16 +74,45 @@
 
     function gotData(data){
         covid = data;
+        console.log(data);
+        console.log(statesData);
+        for (let i = 0; i < statesData.features.length; i++) {
+            console.log(statesData.features[i].properties.name);
+
+
+        }
+        // for (let i = 0; i < covid.length; i++) {
+        //     console.log(covid[i]);
+        //
+        //
+        // }
+
+
         // add covid cases to states data
         statesData.features[1].properties.casesPerOneMillion = covid[1].casesPerOneMillion;
 
         for (let i = 0; i < statesData.length; i++) {
-            if (statesData.features[i].properties.name === covid[i].state) {
-                //L.geoJson(statesData).addTo(map)
-                L.geoJson(covid[i], {style: style}).addTo(map);
-                cases_per_mil.push(covid[i]);
+            console.log(i.type);
+            for (let j = 0; j < statesData.length; j++) {
+                console.log("i: ", statesData.features[i].properties.name , " j: ",covid[j].state);
+                if (statesData.features[i].properties.name === covid[j].state) {
+                    statesData.features[i].properties.casesPerOneMillion = covid[j].casesPerOneMillion;
+
+                }
             }
         }
+        // for (let i in statesData){
+        //     points.push(i);
+        //     for(let j in covid){
+        //         if (i.features[0].properties.name === j.state){
+        //           //  i.properties.casesPerOneMillion = j.casesPerOneMillion
+        //
+        //         }
+        //     }
+        //
+        // }
+
+
     };
 
 
