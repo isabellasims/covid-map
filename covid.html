@@ -40,6 +40,8 @@
 <div id='map'></div>
 
 <script type="text/javascript" src="us-states.js"></script>
+<script type="text/javascript" src="oct-30-cases.js"></script>
+
 
 <script type="text/javascript">
 
@@ -64,32 +66,32 @@
     let covid;
     let bounds = statesData;
     let cases_per_mil;
-    let points = [];
+    let flag;
 
     // GET THE COVID DATA
     function setup(){
         loadJSON("https://disease.sh/v3/covid-19/states",gotData);
     }
 
-
+    //
     function gotData(data){
         covid = data;
 
         statesData.features[1].properties.casesPerOneMillion = covid[1].casesPerOneMillion;
         // add covid cases to states data
         for (let i = 0; i < statesData.features.length; i++) {
-            console.log(i.type);
             for (let j = 0; j < statesData.features.length; j++) {
-
                 if (statesData.features[i].properties.name === covid[j].state) {
                     statesData.features[i].properties.casesPerOneMillion = covid[j].casesPerOneMillion;
-
                 }
             }
         }
 
 
+
     };
+
+
 
 
 
@@ -123,8 +125,10 @@
     }
 
 
-        L.geoJson(statesData, {style: style}).addTo(map);
-        console.log(statesData)
+            console.log(statesData);
+            // why does this not work like it does in chlor map
+            L.geoJson(statesData, {style: style}).addTo(map);
+
 
 
 
