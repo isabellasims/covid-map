@@ -55,7 +55,7 @@
         tileSize: 512,
         zoomOffset: -1
     }).addTo(map);
-//"https://corona.lmao.ninja/v3/covid-19/states"
+    //"https://corona.lmao.ninja/v3/covid-19/states"
     var geojson = L.geoJson(statesData).addTo(map);
 
 
@@ -110,6 +110,8 @@
                                     '#FFEDA0';
     }
 
+    // works this way.
+    statesData.features[0].properties.casesPerOneMillion = 5000;
 
     // CREATE FUNCTION TO STYLE AND APPLY GET COLOR
     function style(feature) {
@@ -125,9 +127,9 @@
     }
 
 
-            console.log(statesData);
-            // why does this not work like it does in chlor map
-            L.geoJson(statesData, {style: style}).addTo(map);
+    console.log(statesData);
+    // why does this not work like it does in chlor map
+    L.geoJson(statesData, {style: style}).addTo(map);
 
 
 
