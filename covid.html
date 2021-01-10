@@ -62,9 +62,11 @@
     let bounds = statesData;
     let ready = false;
 
+
     // GET THE COVID DATA
     function setup(){
         loadJSON("https://disease.sh/v3/covid-19/states",gotData);
+
 
        //  L.geoJson(statesData, {style: style}).addTo(map); doesn't work
     }
@@ -81,6 +83,7 @@
             }
         }
        // L.geoJson(statesData, {style: style}).addTo(map); doesn't work
+
     };
 
 
@@ -117,8 +120,9 @@
         }
     }
     // doesn't work ---> needs to be inside of an async function so data can load and formal but always an error when trying that
+    // all colors are just being set as default... run chloro map to see how the result works w properly loaded data
+    // comment out to see map without adding colors
     L.geoJson(statesData, {style: style}).addTo(map);
-
 
 
 
@@ -129,6 +133,7 @@
         ready = true;
         console.log("Waited an 5s");
         L.geoJson(statesData, {style: style});
+        colors.addTo(map);
         await delay(5000);
         console.log("Waited an additional 5s");
         L.geoJson(statesData, {style: style});
@@ -157,6 +162,16 @@
 
 
 
+// use this instead after I figure out async thing
+    // const colorMap = {
+    //     30000: '#800026',
+    //     25000: '#BD0026',
+    //     20000: '#E31A1C',
+    //     15000: '#FC4E2A',
+    //     5000: '#FD8D3C',
+    //     2000: '#FEB24C',
+    //     1000: '#FED976',
+    // };
 
 
 
