@@ -1,4 +1,39 @@
-// ***     *** //
+// ***  CHLOR STYLE  *** //
+
+// GET CHLOR COLORS BASED ON CASES PER MIL NUM
+function getColor(d) {
+    return d > 100000 ? '#800026' :
+        d > 90000  ? '#BD0026' :
+            d > 80000  ? '#E31A1C' :
+                d > 70000  ? '#FC4E2A' :
+                    d > 60000   ? '#FD8D3C' :
+                        d > 50000   ? '#FEB24C' :
+                            d > 40000   ? '#FED976' :
+                                d > 30000   ? '#FFEDA0' :
+                                    d > 20000   ? '#faffc5' :
+                                        '#fff5f0';
+
+}
+
+
+
+// CREATE FUNCTION TO STYLE AND APPLY GET COLOR
+function style(feature) {
+    return {
+        // apply get color
+        fillColor: getColor(feature.properties.casesPerOneMillion),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    }
+}
+
+
+
+
+
 
 // *** INFO PANNEL *** //
 var info = L.control();
@@ -53,9 +88,9 @@ function onEachFeature(feature, layer) {
 // ***  PER MIL CHLORO LEGEND  *** //
 
 
-var legend = L.control({position: 'bottomright'});
+var milLegend = L.control({position: 'bottomright'});
 
-legend.onAdd = function (map) {
+milLegend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
 
@@ -76,4 +111,4 @@ legend.onAdd = function (map) {
     return div;
 };
 
-legend.addTo(map);
+milLegend.addTo(map);
