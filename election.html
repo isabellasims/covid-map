@@ -28,7 +28,6 @@
             width: 600px;
             height: 400px;
         }
-
     </style>
 
 
@@ -38,8 +37,6 @@
 <div id='map'></div>
 
 <script type="text/javascript" src="us-states.js"></script>
-<script type="text/javascript" src="static-data/elec-results-2020.js"></script>
-
 
 <script type="text/javascript">
     // density chloro map
@@ -54,12 +51,24 @@
         tileSize: 512,
         zoomOffset: -1
     }).addTo(map);
-    var geojson;
 
-    geojson = L.geoJson(statesData).addTo(map);
+    // add state bounds
+    var geojson = L.geoJson(statesData).addTo(map);
+
+    for (let i = 0; i < statesData.features.length; i++) {
+        for (let j = 0; j < statesData.features.length; j++) {
+            if (statesData.features[i].properties.name === covid[j].state) {
+                statesData.features[i].properties.casesPerOneMillion = covid[j].casesPerOneMillion;
+                break;
+            }
+        }
+    }
+
+    geo.addData(statesData); // another part of the solution - addData function
 
 
-//    CREATE A FUNCTION THAT ADDS COLOR BASED ON DENSITY
+
+    //    CREATE A FUNCTION THAT ADDS COLOR BASED ON DENSITY
     function getColor(d) {
         return d > 1000 ? '#800026' :
             d > 500  ? '#BD0026' :
@@ -70,7 +79,7 @@
                                 d > 10   ? '#FED976' :
                                     '#FFEDA0';
     }
-// CREATE FUNCTION TO STYLE AND APPLY GET COLOR
+    // CREATE FUNCTION TO STYLE AND APPLY GET COLOR
     function style(feature) {
         return {
             // apply get color
@@ -82,12 +91,9 @@
             fillOpacity: 0.7
         };
     }
+
+
     L.geoJson(statesData, {style: style}).addTo(map);
-
-
-
-
-
 
 </script>
 
@@ -95,3 +101,4 @@
 
 </body>
 </html>
+
