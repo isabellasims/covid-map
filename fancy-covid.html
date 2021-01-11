@@ -12,15 +12,6 @@
     <!-- import d3   -->
     <script src = "https://d3js.org/d3.v5.min.js"></script>
 
-<!--    &lt;!&ndash;  import leaflet  &ndash;&gt;-->
-<!--    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"-->
-<!--          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="-->
-<!--          crossorigin=""/>-->
-<!--    &lt;!&ndash; Make sure you put this AFTER Leaflet's CSS &ndash;&gt;-->
-<!--    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"-->
-<!--            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="-->
-<!--            crossorigin="">-->
-<!--    </script>-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <!-- import p5 library   -->
@@ -50,7 +41,6 @@
 <div id='map' ></div>
 
 <script type="text/javascript" src="us-states.js"></script>
-<script type="text/javascript" src="oct-30-cases.js"></script>
 
 
 <script type="text/javascript">
@@ -63,7 +53,8 @@
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox/light-v9',
         tileSize: 512,
-        zoomOffset: -1
+        zoomOffset: -1,
+
     }).addTo(map);
     // control that shows state info on hover
     var info = L.control();
@@ -76,16 +67,11 @@
 
     info.update = function (props) {
         this._div.innerHTML = '<h4>US Covid Cases Per Million</h4>' +  (props ?
-            '<b>' + props.name + '</b><br />' + props.casesPerOneMillion + ' cases per million<sup></sup>'
+            '<b>' + props.name + '</b><br />' + props.casesPerOneMillion + ' cases per million since June 1 2019<sup></sup>'
             : 'Hover over a state');
     };
 
     info.addTo(map);
-
-
-
-    //"https://corona.lmao.ninja/v3/covid-19/states"
- //   var geo = L.geoJson(statesData).addTo(map);f
 
     let covid;
 
@@ -93,10 +79,7 @@
     function setup(){
         loadJSON("https://disease.sh/v3/covid-19/states",gotData);
     }
-    // SOLUTION TO LONG TERM PROBLEM
-    // this was the solution that allowed me to add the data from URL to the map.
-    // The whole time, the problem was trying to do this without assigning it to a variable
-    let geo = L.geoJson(statesData, {style: style}).addTo(map);
+
 
     function gotData(data){
         covid = data;
@@ -129,7 +112,6 @@
                                             '#fff5f0';
 
     }
-    // let cols = ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#a50f15','#67000d'];
 
 
 
@@ -208,10 +190,14 @@
         });
     }
 
+
+    let bounds = L.geoJson(statesData);
+    bounds.addTo(map);
     geo = L.geoJson(statesData, {
         style: style,
         onEachFeature: onEachFeature
-    }).addTo(map);
+    });
+    geo.addTo(map);
 
 
 
@@ -239,6 +225,14 @@
     };
 
     legend.addTo(map);
+
+    var overlayMaps = {
+        "covid": geo,
+        "bounds":bounds
+
+    };
+
+    var controlLayers = L.control.layers(overlayMaps).addTo(map);
 
 
 

@@ -63,6 +63,7 @@
         id: 'mapbox/light-v9',
         tileSize: 512,
         zoomOffset: -1
+      //  layers: [geo,geojson]
     }).addTo(map);
     //"https://corona.lmao.ninja/v3/covid-19/states"
     var geojson = L.geoJson(statesData).addTo(map);
@@ -78,6 +79,7 @@
     // this was the solution that allowed me to add the data from URL to the map.
     // The whole time, the problem was trying to do this without assigning it to a variable
     let geo = L.geoJson(statesData, {style: style}).addTo(map);
+
 
     function gotData(data){
         covid = data;
