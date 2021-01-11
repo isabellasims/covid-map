@@ -12,15 +12,17 @@
     <!-- import d3   -->
     <script src = "https://d3js.org/d3.v5.min.js"></script>
 
-    <!--  import leaflet  -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          crossorigin=""/>
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-            crossorigin="">
-    </script>
+<!--    &lt;!&ndash;  import leaflet  &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"-->
+<!--          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="-->
+<!--          crossorigin=""/>-->
+<!--    &lt;!&ndash; Make sure you put this AFTER Leaflet's CSS &ndash;&gt;-->
+<!--    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"-->
+<!--            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="-->
+<!--            crossorigin="">-->
+<!--    </script>-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <!-- import p5 library   -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js" integrity="sha512-WIklPM6qPCIp6d3fSSr90j+1unQHUOoWDS4sdTiR8gxUTnyZ8S2Mr8e10sKKJ/bhJgpAa/qG068RDkg6fIlNFA==" crossorigin="anonymous"></script>
     <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>-->
@@ -73,7 +75,7 @@
     };
 
     info.update = function (props) {
-        this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
+        this._div.innerHTML = '<h4>US Covid Cases Per Million</h4>' +  (props ?
             '<b>' + props.name + '</b><br />' + props.casesPerOneMillion + 'cases per million<sup>2</sup>'
             : 'Hover over a state');
     };
@@ -196,16 +198,13 @@
         info.update();
     }
 
-    function zoomToFeature(e) {
-     //   map.fitBounds(e.target.getBounds());
-        map.flyToBounds(e.target.getBounds());
-    }
+
 
     function onEachFeature(feature, layer) {
         layer.on({
             mouseover: highlightFeature,
             mouseout: resetHighlight,
-            click: zoomToFeature
+            //click: geo.flyToBounds()
         });
     }
 
