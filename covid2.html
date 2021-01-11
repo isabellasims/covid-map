@@ -59,72 +59,43 @@
     var geojson = L.geoJson(statesData).addTo(map);
 
     let covid;
-    let bounds = statesData;
-    let ready = false;
 
-
-  //  GET THE COVID DATA
+    //  GET THE COVID DATA
     function setup(){
         loadJSON("https://disease.sh/v3/covid-19/states",gotData);
-
-
-        //  L.geoJson(statesData, {style: style}).addTo(map); doesn't work
     }
 
-    function preload(){
-        let covid = loadJSON("https://disease.sh/v3/covid-19/states")
-    }
-
-    var geo =
-     L.geoJSON(statesData, {
-        style: style
-     }).addTo(map);
+    // SOLUTION TO LONG TERM PROBLEM
+    // this was the solution that allowed me to add the data from URL to the map.
+    // The whole time, the problem was trying to do this without assigning it to a variable
+    let geo = L.geoJson(statesData, {style: style}).addTo(map);
 
     function gotData(data){
         covid = data;
-
         statesData.features[1].properties.casesPerOneMillion = covid[1].casesPerOneMillion;
         // add covid cases to states data
         for (let i = 0; i < statesData.features.length; i++) {
             for (let j = 0; j < statesData.features.length; j++) {
                 if (statesData.features[i].properties.name === covid[j].state) {
                     statesData.features[i].properties.casesPerOneMillion = covid[j].casesPerOneMillion;
+                    break;
                 }
             }
         }
-        // L.geoJson(statesData, {style: style}).addTo(map); doesn't work
-         geo.addData(statesData);
-        //
-        // L.geoJSON(null, {
-        //     style: style
-        // }).addTo(map);
 
-       // geo.addData(L.geoJson(statesData, {style: style}));
-        // L.geoJSON(statesData, {
-        //     style: style
-        // }).addTo(map);
+        geo.addData(statesData); // another part of the solution - addData function
 
     };
 
-    // geo.addTo(map);
-
-
-
-
-
-    // works this way. So the data is obviously loading after than the chloro colors have been added.
-    statesData.features[0].properties.casesPerOneMillion = 5000;
-    //var geojson = L.geoJson(statesData).addTo(map);
-
     // GET CHLORO COLORS BASED ON CASES PER MIL NUM
     function getColor(d) {
-        return d > 30000 ? '#800026' :
-            d > 25000  ? '#BD0026' :
-                d > 20000  ? '#E31A1C' :
-                    d > 15000  ? '#FC4E2A' :
-                        d > 5000   ? '#FD8D3C' :
-                            d > 2000   ? '#FEB24C' :
-                                d > 1000   ? '#FED976' :
+        return d > 100000 ? '#800026' :
+            d > 90000  ? '#BD0026' :
+                d > 80000  ? '#E31A1C' :
+                    d > 70000  ? '#FC4E2A' :
+                        d > 60000   ? '#FD8D3C' :
+                            d > 50000   ? '#FEB24C' :
+                                d > 40000   ? '#FED976' :
                                     '#FFEDA0';
     }
 
@@ -140,36 +111,9 @@
             fillOpacity: 0.7
         }
     }
-    // doesn't work ---> needs to be inside of an async function so data can load and formal but always an error when trying that
-    // all colors are just being set as default... run chloro map to see how the result works w properly loaded data
-    // comment out to see map without adding colors
-    L.geoJson(statesData, {style: style}).addTo(map);
-
-
-
-    // no luck
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    const yourFunction = async () => {
-        await delay(5000);
-        ready = true;
-        console.log("Waited an 5s");
-        L.geoJson(statesData, {style: style});
-        colors.addTo(map);
-        await delay(5000);
-        console.log("Waited an additional 5s");
-        L.geoJson(statesData, {style: style});
-        // colors.addTo(map)
-
-
-    };
-    //
-    yourFunction();
-    // no luck
-    while(ready === true){
-
-        L.geoJson(statesData, {style: style}).addTo(map);
+    for(let i = 0; i< statesData.features.length;i++){
+        console.log(statesData.features[i].properties.casesPerOneMillion);
     }
-
 
 
 
@@ -181,7 +125,8 @@
 
 
 
-
+    // works this way. So the data is obviously loading after than the chloro colors have been added.
+    //statesData.features[0].properties.casesPerOneMillion = 5000;
 
     // use this instead after I figure out async thing
     // const colorMap = {
