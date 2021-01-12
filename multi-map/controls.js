@@ -32,18 +32,18 @@ function style(feature) {
 
 
 // *** INFO PANNEL *** //
-var info = L.control();
-info.onAdd = function (map) {
+var milInfo = L.control();
+milInfo.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info');
     this.update();
     return this._div;
 };
-info.update = function (props) {
+milInfo.update = function (props) {
     this._div.innerHTML = '<h4>US Covid Cases Per Million</h4>' +  (props ?
         '<b>' + props.name + '</b><br />' + props.casesPerOneMillion + ' cases per million since June 1 2019<sup></sup>'
         : 'Hover over a state');
 };
-info.addTo(map);
+milInfo.addTo(map);
 
 
 
@@ -62,13 +62,13 @@ function highlightFeature(e) {
         layer.bringToFront();
     }
 
-    info.update(layer.feature.properties);
+    milInfo.update(layer.feature.properties);
 }
 
 
 function resetHighlight(e) {
     geo.resetStyle(e.target);
-    info.update();
+    milInfo.update();
 }
 
 
@@ -107,4 +107,4 @@ milLegend.onAdd = function (map) {
     return div;
 };
 
-//milLegend.addTo(map);
+//milLegend.addTo(map); //removed when implimented legend toggle
