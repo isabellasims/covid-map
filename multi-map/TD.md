@@ -3,6 +3,8 @@
 
 [ ] Add state names
 
+[ ] Use an algorithm to scale colors
+
 **Legend groups (will be done in full scr)**
 
     [ ] COVID - cumulative 
@@ -24,6 +26,7 @@
 **Related data**
 
     [ ] Election 2020
+        [ ] county voting results vs county covid rate
     
     [ ] Mask rate
     

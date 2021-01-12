@@ -31,10 +31,6 @@ function style(feature) {
 }
 
 
-
-
-
-
 // *** INFO PANNEL *** //
 var info = L.control();
 info.onAdd = function (map) {
@@ -111,4 +107,4 @@ milLegend.onAdd = function (map) {
     return div;
 };
 
-milLegend.addTo(map);
+//milLegend.addTo(map);

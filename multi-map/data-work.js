@@ -1,10 +1,10 @@
-// *** GET THE COVID DATA *** // 
+// *** GET THE COVID DATA *** //
 function setup(){
     loadJSON("https://disease.sh/v3/covid-19/states",gotData);
 }
 
-// *** FORMAT THE DATA *** // 
-// adds casesPerMillion from queried data to states data 
+// *** FORMAT THE DATA *** //
+// adds casesPerMillion from queried data to states data
 function gotData(data){
     covid = data;
     statesData.features[1].properties.casesPerOneMillion = covid[1].casesPerOneMillion;
@@ -21,3 +21,4 @@ function gotData(data){
     geo.addData(statesData); // another part of the solution - addData function
 
 };
+
