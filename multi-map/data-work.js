@@ -12,7 +12,10 @@ function gotData(data){
     for (let i = 0; i < statesData.features.length; i++) {
         for (let j = 0; j < statesData.features.length; j++) {
             if (statesData.features[i].properties.name === covid[j].state) {
+                // add cases per million to statesData
                 statesData.features[i].properties.casesPerOneMillion = covid[j].casesPerOneMillion;
+                // add tests per million to statesData
+                statesData.features[i].properties.testsPerOneMillion = covid[j].testsPerOneMillion;
                 break;
             }
         }

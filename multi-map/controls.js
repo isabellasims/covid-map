@@ -39,11 +39,11 @@ milInfo.onAdd = function (map) {
     return this._div;
 };
 milInfo.update = function (props) {
-    this._div.innerHTML = '<h4>US Covid Cases Per Million</h4>' +  (props ?
+    this._div.innerHTML = '<h4>US Covid Cases Per Million since June 1, 2019</h4>' +  (props ?
         '<b>' + props.name + '</b><br />' + props.casesPerOneMillion + ' cases per million since June 1 2019<sup></sup>'
         : 'Hover over a state');
 };
-milInfo.addTo(map);
+//milInfo.addTo(map);
 
 
 

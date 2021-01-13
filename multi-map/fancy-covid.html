@@ -70,15 +70,18 @@
     var controlLayers = L.control.layers(overlayMaps);
     controlLayers.addTo(map);
 
-    // ** LEGEND CONTROL ** //
+    // ** LEGEND & INFO CONTROL ** //
+    // base layer
     map.on("baselayerchange", function (eventLayer) {
         console.log("COVID LAYER TRIGGERED");
         // Switch to the Population legend...
         if (eventLayer.name === 'covid') {
             milLegend.addTo(this);
+            milInfo.addTo(this);
             console.log("COVID LAYER TRIGGERED");
         } else { // Or switch to the Population Change legend...
             this.removeControl(milLegend);
+            this.removeControl(milInfo)
 
         }
     });
