@@ -12,7 +12,6 @@ function getColor(d) {
                                 d > 30000   ? '#FFEDA0' :
                                     d > 20000   ? '#faffc5' :
                                         '#fff5f0';
-
 }
 
 
@@ -22,6 +21,19 @@ function style(feature) {
     return {
         // apply get color
         fillColor: getColor(feature.properties.casesPerOneMillion),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    }
+}
+
+// CREATE FUNCTION TO STYLE AND APPLY GET COLOR
+function style2(feature) {
+    return {
+        // apply get color
+        fillColor: getColor(feature.properties.testsPerOneMillion),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -44,6 +56,18 @@ milInfo.update = function (props) {
         : 'Hover over a state');
 };
 //milInfo.addTo(map);
+
+// var testsInfo = L.control();
+// testsInfo.onAdd = function (map) {
+//     this._div = L.DomUtil.create('div', 'info');
+//     this.update();
+//     return this._div;
+// };
+// testsInfo.update = function (props) {
+//     this._div.innerHTML = '<h4>US Covid Cases Per Million since June 1, 2019</h4>' +  (props ?
+//         '<b>' + props.name + '</b><br />' + props.testsPerOneMillion + ' cases per million since June 1 2019<sup></sup>'
+//         : 'Hover over a state');
+// };
 
 
 
