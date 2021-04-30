@@ -94,8 +94,11 @@ function style2(feature) {
 var milInfo = L.control();
 milInfo.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info');
-    this.update();
+    this.init();
     return this._div;
+};
+milInfo.init = function () {
+    this._div.innerHTML = '<h4>Select a layer</h4>'
 };
 milInfo.update = function (props) {
     this._div.innerHTML = '<h4>US Covid Cases Per Million since June 1, 2019</h4>' +  (props ?
