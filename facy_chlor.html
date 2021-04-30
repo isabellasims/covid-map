@@ -111,6 +111,7 @@
     var geojson;
 
     function resetHighlight(e) {
+        map.resetStyle();
         geojson.resetStyle(e.target);
         info.update();
     }

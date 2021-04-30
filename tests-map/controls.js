@@ -20,7 +20,7 @@ function getColor(d) {
 function style(feature) {
     return {
         // apply get color
-        fillColor: getColor(feature.properties.testsPerOneMillion),
+        fillColor: getColor(feature.properties.casesPerOneMillion),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -57,17 +57,7 @@ milInfo.update = function (props) {
 };
 //milInfo.addTo(map);
 
-// var testsInfo = L.control();
-// testsInfo.onAdd = function (map) {
-//     this._div = L.DomUtil.create('div', 'info');
-//     this.update();
-//     return this._div;
-// };
-// testsInfo.update = function (props) {
-//     this._div.innerHTML = '<h4>US Covid Cases Per Million since June 1, 2019</h4>' +  (props ?
-//         '<b>' + props.name + '</b><br />' + props.testsPerOneMillion + ' cases per million since June 1 2019<sup></sup>'
-//         : 'Hover over a state');
-// };
+
 
 
 
@@ -87,30 +77,56 @@ function highlightFeature(e) {
     }
 
     milInfo.update(layer.feature.properties);
+    testsInfo.update(layer.feature.properties);
 }
 
 
 function resetHighlight(e) {
+
     geo.resetStyle(e.target);
+    testsLayer.resetStyle(e.target);
     milInfo.update();
+    testsInfo.update();
 }
 
 
 
-function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        //click: geo.flyToBounds()
-    });
-}
+// function onEachFeature(feature, layer) {
+//     layer.on({
+//         mouseover: highlightFeature,
+//         mouseout: resetHighlight,
+//         //click: geo.flyToBounds()
+//     });
+// }
 
 // ***  PER MIL CHLORO LEGEND  *** //
 
 
 var milLegend = L.control({position: 'bottomright'});
+var testsLegend = L.control({position: 'bottomright'});
 
 milLegend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+
+        grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
+        labels = [],
+        from, to;
+
+    for (var i = 0; i < grades.length; i++) {
+        from = grades[i];
+        to = grades[i + 1];
+
+        labels.push(
+            '<i style="background:' + getColor(from + 1) + '"></i> ' +
+            from + (to ? '&ndash;' + to : '+'));
+    }
+
+    div.innerHTML = labels.join('<br>');
+    return div;
+};
+
+testsLegend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
 

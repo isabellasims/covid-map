@@ -45,6 +45,7 @@
 
 <script type="text/javascript">
     let covid;
+    let geo;
     let bounds = L.geoJson(statesData);
     bounds.addTo(map);
     let testsLayer;
@@ -52,13 +53,13 @@
 
     geo = L.geoJson(statesData, {
         style: style,
-        onEachFeature: onEachFeature,
+      //  onEachFeature: onEachFeature,
 
     });
 
     testsLayer = L.geoJson(statesData, {
-        style: style,
-        onEachFeature: onEachFeature,
+        style: style2,
+       // onEachFeature: onEachFeature,
 
     });
    // geo.addTo(map);
@@ -67,9 +68,10 @@
 
 
     var overlayMaps = {
+        "tests":testsLayer,
         "covid": geo,
         "bounds":bounds,
-        //"tests":testsLayer,
+
 
       //  "legend": milLegend
 
@@ -81,22 +83,28 @@
     // ** LEGEND & INFO CONTROL ** //
     // to fix order should change innerHTML instead of adding / removing from map so that info can always be added to map
     map.on("baselayerchange", function (eventLayer) {
-        console.log("COVID LAYER TRIGGERED");
-        // Switch to the Population legend...
-        if (eventLayer.name === 'covid') {
-        //    milInfo.innerHTML = "US Covid Cases Per Million since June 1, 2019";
+      //  console.log("COVID LAYER TRIGGERED");
+        if (eventLayer.name === 'tests') {
             milLegend.addTo(this);
             milInfo.addTo(this);
-            console.log("COVID LAYER TRIGGERED");
-
+            document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div.info.leaflet-control > h4").innerText = "US Tests Cases Per Million since June 1, 2019";
+            milInfo.innerHTML = "US Tests Cases Per Million since June 1, 2019";
+            // this.removeControl(milLegend);
+            // this.removeControl(milInfo);
+            // testsInfo.addTo(this);
+            // testsLegend.addTo(this);
+            console.log("TESTS LAYER TRIGGERED");
         }
-        // if (eventLayer.name === 'tests') {
-        //     //    milInfo.innerHTML = "US Covid Cases Per Million since June 1, 2019";
-        //     this.removeControl(milLegend);
-        //     this.removeControl(milInfo);
-        //     testsInfo.addTo(this);
+        // Switch to the Population legend...
+        // if (eventLayer.name === 'covid') {
+        // //    milInfo.innerHTML = "US Covid Cases Per Million since June 1, 2019";
+        //     milLegend.addTo(this);
+        //     milInfo.addTo(this);
         //     console.log("COVID LAYER TRIGGERED");
+        //
         // }
+
+
         else { // Or switch to the Population Change legend...
             this.removeControl(milLegend);
             this.removeControl(milInfo);

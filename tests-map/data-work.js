@@ -21,7 +21,7 @@ function gotData(data){
         }
     }
     geo.addData(statesData); // another part of the solution - addData function
-
+    testsLayer.addData(statesData);
 }
 
 
