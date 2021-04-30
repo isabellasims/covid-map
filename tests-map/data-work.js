@@ -4,7 +4,7 @@ function setup(){
 }
 
 // *** FORMAT THE DATA *** //
-// adds casesPerMillion from queried data to states data
+// adds casesPerMillion and testsPerMillion from queried data to states data
 function gotData(data){
     covid = data;
     statesData.features[1].properties.casesPerOneMillion = covid[1].casesPerOneMillion;

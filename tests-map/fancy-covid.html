@@ -80,10 +80,12 @@
 
     };
 
-    var controlLayers = L.control.layers(overlayMaps,null);
+    var controlLayers = L.control.layers(overlayMaps,null); // null means you can only have one layer selected at once, is essential to layer control
     controlLayers.addTo(map);
     milLegend.addTo(map);
     milInfo.addTo(map);
+    document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div.info.leaflet-control > h4").innerText = "Select a Layer";
+
 
 
     // ** LEGEND & INFO CONTROL ** //
