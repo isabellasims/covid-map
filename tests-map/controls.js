@@ -179,6 +179,20 @@
 
 // ***  CHLOR STYLE  *** //
 
+function getColor(d) {
+    return d > 130000 ? '#4f001a' :
+        d > 100000 ? '#800026' :
+            d > 90000  ? '#BD0026' :
+                d > 80000  ? '#E31A1C' :
+                    d > 70000  ? '#FC4E2A' :
+                        d > 60000   ? '#FD8D3C' :
+                            d > 50000   ? '#FEB24C' :
+                                d > 40000   ? '#FED976' :
+                                    d > 30000   ? '#FFEDA0' :
+                                        d > 20000   ? '#faffc5' :
+                                            '#fff5f0';
+}
+
 //GET CHLOR COLORS BASED ON CASES PER MIL NUM
 function getColor(d) {
     return d > 130000 ? '#4f001a' :
@@ -341,7 +355,7 @@ milLegend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
 
-        grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
+        grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000,130000],
         labels = [],
         from, to;
 
