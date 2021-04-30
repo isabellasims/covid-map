@@ -179,9 +179,10 @@
 
 // ***  CHLOR STYLE  *** //
 
-// GET CHLOR COLORS BASED ON CASES PER MIL NUM
+//GET CHLOR COLORS BASED ON CASES PER MIL NUM
 function getColor(d) {
-    return d > 100000 ? '#800026' :
+    return d > 130000 ? '#4f001a' :
+        d > 100000 ? '#800026' :
         d > 90000  ? '#BD0026' :
             d > 80000  ? '#E31A1C' :
                 d > 70000  ? '#FC4E2A' :
@@ -192,7 +193,21 @@ function getColor(d) {
                                     d > 20000   ? '#faffc5' :
                                         '#fff5f0';
 }
-
+// function getColor(d) {
+//     return d > 130000 ? '#2b0015' :
+//     d > 120000 ? '#43001d' :
+//     d > 110000 ? '#5c0026' :
+//         d > 100000 ? '#800026' :
+//             d > 90000  ? '#BD0026' :
+//                 d > 80000  ? '#E31A1C' :
+//                     d > 70000  ? '#FC4E2A' :
+//                         d > 60000   ? '#FD8D3C' :
+//                             d > 50000   ? '#FEB24C' :
+//                                 d > 40000   ? '#FED976' :
+//                                     d > 30000   ? '#FFEDA0' :
+//                                         d > 20000   ? '#faffc5' :
+//                                             '#fff5f0';
+// }
 
 
 // CREATE FUNCTION TO STYLE AND APPLY GET COLOR
@@ -269,7 +284,7 @@ function highlightFeature(e) {
 function resetHighlight(e) {
 
     geo.resetStyle(e.target);
-    testsLayer.resetStyle(e.target);
+ //   testsLayer.resetStyle(e.target);
     milInfo.update();
  //   testsInfo.update();
 }
@@ -295,7 +310,7 @@ function highlightFeature2(e) {
 
 function resetHighlight2(e) {
 
-    geo.resetStyle(e.target);
+  //  geo.resetStyle(e.target);
     testsLayer.resetStyle(e.target);
     milInfo.update2();
     //   testsInfo.update();
@@ -342,24 +357,24 @@ milLegend.onAdd = function (map) {
     div.innerHTML = labels.join('<br>');
     return div;
 };
-
-testsLegend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-
-        grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
-        labels = [],
-        from, to;
-
-    for (var i = 0; i < grades.length; i++) {
-        from = grades[i];
-        to = grades[i + 1];
-
-        labels.push(
-            '<i style="background:' + getColor(from + 1) + '"></i> ' +
-            from + (to ? '&ndash;' + to : '+'));
-    }
-
-    div.innerHTML = labels.join('<br>');
-    return div;
-};
+//
+// testsLegend.onAdd = function (map) {
+//
+//     var div = L.DomUtil.create('div', 'info legend'),
+//
+//         grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
+//         labels = [],
+//         from, to;
+//
+//     for (var i = 0; i < grades.length; i++) {
+//         from = grades[i];
+//         to = grades[i + 1];
+//
+//         labels.push(
+//             '<i style="background:' + getColor(from + 1) + '"></i> ' +
+//             from + (to ? '&ndash;' + to : '+'));
+//     }
+//
+//     div.innerHTML = labels.join('<br>');
+//     return div;
+// };
