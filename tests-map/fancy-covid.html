@@ -53,13 +53,13 @@
 
     geo = L.geoJson(statesData, {
         style: style,
-      //  onEachFeature: onEachFeature,
+        onEachFeature: onEachFeature,
 
     });
 
     testsLayer = L.geoJson(statesData, {
         style: style2,
-       // onEachFeature: onEachFeature,
+        onEachFeature: onEachFeature2,
 
     });
    // geo.addTo(map);
@@ -77,7 +77,10 @@
 
     };
 
-    var controlLayers = L.control.layers(overlayMaps);
+    var controlLayers = L.control.layers(overlayMaps,null);
+    controlLayers.addTo(map);
+    milLegend.addTo(map);
+    milInfo.addTo(map);
 
 
     // ** LEGEND & INFO CONTROL ** //
@@ -85,9 +88,9 @@
     map.on("baselayerchange", function (eventLayer) {
       //  console.log("COVID LAYER TRIGGERED");
         if (eventLayer.name === 'tests') {
-            milLegend.addTo(this);
-            milInfo.addTo(this);
-            document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div.info.leaflet-control > h4").innerText = "US Tests Cases Per Million since June 1, 2019";
+           // milLegend.addTo(this);
+          //  milInfo.addTo(this);
+            document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div.info.leaflet-control > h4").innerText = "US Tests Per Million since June 1, 2019";
             milInfo.innerHTML = "US Tests Cases Per Million since June 1, 2019";
             // this.removeControl(milLegend);
             // this.removeControl(milInfo);
@@ -95,25 +98,28 @@
             // testsLegend.addTo(this);
             console.log("TESTS LAYER TRIGGERED");
         }
-        // Switch to the Population legend...
-        // if (eventLayer.name === 'covid') {
-        // //    milInfo.innerHTML = "US Covid Cases Per Million since June 1, 2019";
-        //     milLegend.addTo(this);
-        //     milInfo.addTo(this);
-        //     console.log("COVID LAYER TRIGGERED");
-        //
-        // }
+
+        else if (eventLayer.name === 'covid') {
+        //    milInfo.innerHTML = "US Covid Cases Per Million since June 1, 2019";
+            document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div.info.leaflet-control > h4").innerText = "US Cases Per Million since June 1, 2019";
+           // milLegend.addTo(this);
+         //   milInfo.addTo(this);
+            console.log("COVID LAYER TRIGGERED");
+
+        }
 
 
         else { // Or switch to the Population Change legend...
-            this.removeControl(milLegend);
-            this.removeControl(milInfo);
-        //    milInfo.innerHTML = "Select a layer";
+            // this.removeControl(milLegend);
+            // this.removeControl(milInfo);
+            document.querySelector("#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div.info.leaflet-control > h4").innerText = "Select a Layer";
+            console.log(eventLayer.name);
+            milInfo.innerHTML = "Select a layer";
           //  milInfo.addTo(this);
 
         }
     });
-    controlLayers.addTo(map);
+    // controlLayers.addTo(map);
 
 
 
