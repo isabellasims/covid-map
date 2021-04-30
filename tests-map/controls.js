@@ -192,10 +192,26 @@ function getColor(d) {
                                         d > 20000   ? '#faffc5' :
                                             '#fff5f0';
 }
+// #c6dbef
+// #9ecae1
 
+// #6baed6
+// #4292c6
+// #2171b5
+// #08519c
+// #08306b
 //GET CHLOR COLORS BASED ON CASES PER MIL NUM
 function getColor(d) {
-    return d > 130000 ? '#4f001a' :
+    return d > 1200000 ? '#08306b' :
+    d > 1100000 ? '#08519c' :
+    d > 1000000 ? '#2171b5' :
+    d > 900000 ? '#4292c6' :
+    d > 800000 ? '#6baed6' :
+    d > 700000 ? '#9ecae1' :
+    d > 600000 ? '#c6dbef' :
+    d > 500000 ? '#deebf7' :
+    d > 400000 ? '#f7fbff' :
+    d > 130000 ? '#4f001a' :
         d > 100000 ? '#800026' :
         d > 90000  ? '#BD0026' :
             d > 80000  ? '#E31A1C' :
@@ -349,13 +365,22 @@ function onEachFeature2(feature, layer) {
 
 
 var milLegend = L.control({position: 'bottomright'});
-var testsLegend = L.control({position: 'bottomright'});
+var testsLegend = L.control({position: 'bottomleft'});
 
 milLegend.onAdd = function (map) {
-
+//     milLegend.onAdd = function (map) {
+// //     d > 1100000 ? '#08519c' :
+// //         d > 1000000 ? '#2171b5' :
+// //             d > 900000 ? '#4292c6' :
+// //                 d > 800000 ? '#6baed6' :
+// //                     d > 700000 ? '#9ecae1' :
+// //                         d > 600000 ? '#c6dbef' :
+// //                             d > 500000 ? '#deebf7' :
+// //                                 d > 400000 ? '#f7fbff' :
+// //                                     d > 130000 ? '#4f001a' :
     var div = L.DomUtil.create('div', 'info legend'),
 
-        grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000,130000],
+        grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000,130000,400000,500000,600000, 700000,800000,900000,1000000,1100000],
         labels = [],
         from, to;
 
@@ -371,24 +396,4 @@ milLegend.onAdd = function (map) {
     div.innerHTML = labels.join('<br>');
     return div;
 };
-//
-// testsLegend.onAdd = function (map) {
-//
-//     var div = L.DomUtil.create('div', 'info legend'),
-//
-//         grades = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
-//         labels = [],
-//         from, to;
-//
-//     for (var i = 0; i < grades.length; i++) {
-//         from = grades[i];
-//         to = grades[i + 1];
-//
-//         labels.push(
-//             '<i style="background:' + getColor(from + 1) + '"></i> ' +
-//             from + (to ? '&ndash;' + to : '+'));
-//     }
-//
-//     div.innerHTML = labels.join('<br>');
-//     return div;
-// };
+
