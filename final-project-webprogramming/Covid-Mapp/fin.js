@@ -1,3 +1,4 @@
+// final js final to be added in head after everything else has loaded
 let covid;
 let geo;
 let bounds = L.geoJson(statesData);

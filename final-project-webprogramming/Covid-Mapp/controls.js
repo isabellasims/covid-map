@@ -1,7 +1,4 @@
-
-
 // ***  CHLOR STYLE  *** //
-
 function getColor(d) {
     return d > 130000 ? '#4f001a' :
         d > 100000 ? '#800026' :
@@ -109,16 +106,16 @@ function highlightFeature(e) {
     }
 
     milInfo.update(layer.feature.properties);
-   
+
 }
 
 
 function resetHighlight(e) {
 
     geo.resetStyle(e.target);
- 
+
     milInfo.update();
- 
+
 }
 // *** LAYER EVENTS *** //
 function highlightFeature2(e) {
@@ -136,7 +133,7 @@ function highlightFeature2(e) {
     }
 
     milInfo.update2(layer.feature.properties);
-    
+
 }
 
 
@@ -160,11 +157,10 @@ function onEachFeature2(feature, layer) {
     });
 }
 // ***  PER MIL CHLORO LEGEND  *** //
-
-
+// add the legend to the map
 var milLegend = L.control({position: 'bottomright'});
-var testsLegend = L.control({position: 'bottomleft'});
 
+// legend shell derived from leaflet.js documentation. Altered to fit our own needs.
 milLegend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
